@@ -12,12 +12,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 @Component
 public class LogFilter extends AbstractGatewayFilterFactory<LogFilter.Config> {
 
     private static Logger log = Logger.getLogger(LogFilter.class.getName());
+    private static AtomicInteger COUNT_CALL_GATEWAY = new AtomicInteger(0);
 
     public LogFilter() {
         super(Config.class);
@@ -33,9 +35,12 @@ public class LogFilter extends AbstractGatewayFilterFactory<LogFilter.Config> {
     @Override
     public GatewayFilter apply(Config config){
         return (exchange, chain) -> {
+            COUNT_CALL_GATEWAY.addAndGet(1);
             //Filtro previo a la invocación del servicio real asociado al gateway
             log.info("Path requested: " + exchange.getRequest().getPath());
             log.info("Ejecutando la primera instancia..." + config.message);
+            //Activad de las mesas para poner un contador de consultas
+            log.info("La cantidad de veces que se llamo fue: "+ COUNT_CALL_GATEWAY);
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 //Filtro posterior a la invocación del servicio real asociado al gateway
                 Optional.ofNullable(config.cookieValue).ifPresent(cookie ->
