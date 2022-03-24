@@ -12,7 +12,7 @@ import java.util.List;
 @LoadBalancerClient(name = "clientservice", configuration=CustomLoadBalancerConfiguration.class)
 public interface IConsumer {
 
-    @GetMapping("/getClients")
+    @GetMapping("/servicioNegocio/getClients")
     ResponseEntity<List<Object>> getApi();
 
 }

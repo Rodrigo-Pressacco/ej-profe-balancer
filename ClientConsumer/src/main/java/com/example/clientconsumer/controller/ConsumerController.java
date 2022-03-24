@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/clientConsumer")
 public class ConsumerController {
 
     private final IConsumer restConsumer;
