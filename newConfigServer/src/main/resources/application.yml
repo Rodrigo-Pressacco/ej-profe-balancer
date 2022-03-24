@@ -1,5 +1,6 @@
 server:
-  port: 8888
+  port: ${PORT:8888}
+
 spring:
   application:
     name: configserver
@@ -7,4 +8,4 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/Rodrigo-Pressacco/ej-profe-balancer/tree/main/archivos-YML
+          uri: https://github.com/Rodrigo-Pressacco/archivos-yml-practica
